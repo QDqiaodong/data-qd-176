@@ -56,6 +56,33 @@ PYTHONPATH=src sh examples/ledger-cli/00-run.sh              # 等价 CLI 演示
 一个原子业务提交，`generation` 单调递增；`request_id` 幂等且其判断优先于 generation
 冲突，精确重试返回第一次的完整回执。完整口径见[计量台账契约](docs/ledger-contract.md)。
 
+## 回用水盐分核算与水质拦截（soil-water-reuse）
+
+`irrigation.reuse_water` 核对合作社把田间径流、渗漏收回蓄水池再灌溉的**给定实测
+操作**：按日尺度完全混合模型逐池核算蒸发、外来补水、同日池间循环输水（含环路浓度
+联合求解）、抽水与溢流，逐田块核算水质拦截、输水损失携盐、雨水稀释、径流/渗漏携盐
+与跨日回流，输出精确有理数的水盐残差。它不选择供水计划、不推算收费、不操作设备，
+也不读写计量台账；`run`、`plan`、`meter_ledger` 与三个既有命令的接口行为完全不变。
+
+```sh
+PYTHONPATH=src python3 examples/reuse_worked_example.py     # API 两日算例（含断言）
+PYTHONPATH=src sh examples/reuse-cli/00-run.sh              # 等价 CLI 演示（含循环混合）
+```
+
+或直接运行命令（输出路径必须不存在，重复演示请换新路径）：
+
+```sh
+PYTHONPATH=src python3 -m irrigation.reuse_cli \
+  --source fixtures/reuse-input.json --output run/reuse-report.json
+```
+
+样例 `fixtures/reuse-input.json` 是契约规定的两日可复核算例：首日 5L 淡水获准到田，
+田间渗漏携盐 `100/7` mg 并于次日早全量回流；池水次日浓度升至 `10/7` mg/L，超过
+1 mg/L 限值，1L 抽水被整笔拦截（携盐 `10/7` mg），田块零灌溉。全系统期初水 12L、
+盐 20mg，期末水 10L、盐 `130/7` mg，加拒水 1L/盐 `10/7` mg 与 ET 1L，水盐残差均
+精确为 `"0"`，末日无窗口外回流。API 形式为 `irrigation.reuse_water.run(data)`。
+完整口径见[回用水契约](docs/reuse-contract.md)。
+
 ## 契约与边界
 
 详见[数据契约](docs/contract.md)。水深使用Fraction精确计算；建议仅供人工安排，不自动控制泵或预测作物。

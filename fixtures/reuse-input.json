@@ -1,0 +1,71 @@
+{
+  "fields": [
+    {
+      "id": "f",
+      "area_m2": 1,
+      "capacity_mm": 2,
+      "opening_mm": 2,
+      "threshold_mm": 0,
+      "target_mm": 0,
+      "infiltration_mm": 10,
+      "efficiency_permille": 1000
+    }
+  ],
+  "weather": [
+    {
+      "date": "2026-10-01",
+      "rain_mm": 0,
+      "et_mm": 0
+    },
+    {
+      "date": "2026-10-02",
+      "rain_mm": 0,
+      "et_mm": 1
+    }
+  ],
+  "tanks": [
+    {
+      "id": "r",
+      "capacity_litres": 20,
+      "opening_litres": 10,
+      "opening_salt_mg": 0
+    }
+  ],
+  "field_reuse": [
+    {
+      "field_id": "f",
+      "opening_salt_mg": 20,
+      "max_source_mg_per_litre": 1,
+      "return_permille": 1000,
+      "return_tank_id": "r"
+    }
+  ],
+  "operations": [
+    {
+      "date": "2026-10-01",
+      "inflows": [],
+      "evaporations": [],
+      "transfers": [],
+      "withdrawals": [
+        {
+          "field_id": "f",
+          "tank_id": "r",
+          "gross_litres": 5
+        }
+      ]
+    },
+    {
+      "date": "2026-10-02",
+      "inflows": [],
+      "evaporations": [],
+      "transfers": [],
+      "withdrawals": [
+        {
+          "field_id": "f",
+          "tank_id": "r",
+          "gross_litres": 1
+        }
+      ]
+    }
+  ]
+}
