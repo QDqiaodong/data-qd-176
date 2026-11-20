@@ -83,6 +83,35 @@ PYTHONPATH=src python3 -m irrigation.reuse_cli \
 精确为 `"0"`，末日无窗口外回流。API 形式为 `irrigation.reuse_water.run(data)`。
 完整口径见[回用水契约](docs/reuse-contract.md)。
 
+## 田块拆并接续与用水来源审计（soil-water-land）
+
+`irrigation.land_water` 处理合作社季中拆分、合并田块的接续核算：旧田块退出后
+土壤水留在原地，新田块按接管土地面积比例接续其期末储水与全部来源份额。日水账
+逐字段复用现有 `balance.step` 口径；在均匀混合模型下逐笔追踪每一股历史来水
+（首日土壤存量、每日降雨、每日毛供水）最终流向哪些终点（输水损耗、径流、渗漏、
+实际蒸散、末日结存），支持双向审计：某笔历史进水去了哪里，某项损耗由哪些历史
+进水构成。它不选择供水计划、不操作设备，也不读写计量台账或回用水台账；`run`、
+`plan`、`meter_ledger`、`reuse_water` 与四个既有命令的接口行为完全不变。
+
+```sh
+PYTHONPATH=src python3 examples/land_worked_example.py     # API 三日算例（含独立断言）
+PYTHONPATH=src sh examples/land-cli/00-run.sh              # 等价 CLI 演示
+```
+
+或直接运行命令（输出路径必须不存在，重复演示请换新路径）：
+
+```sh
+PYTHONPATH=src python3 -m irrigation.land_water_cli \
+  --source fixtures/land-input.json --output run/land-report.json
+```
+
+样例 `fixtures/land-input.json` 是契约规定的三个连续气象日算例：首日 a、b 各
+2m²（a 期初 4mm、b 灌溉 4mm，各结存 8L）；次日 a、b 退出，c、d 各接管两半土地，
+c 因容量 3mm 渗漏 2L（两笔来源各 1L）、ET 各 2L；第三日 c、d 并入 e，末存 10L
+中 a 的初始水与 b 的灌溉水各 5L，系统余额精确为 `"0"`。换成 c 独占 a、d 独占 b
+后末存来源变为 a=4L、b=6L；去掉灌溉且次日 ET=3mm 时，半接管 c 缺水 1mm、独占
+c 渗漏 1mm 且缺水 0。完整口径见[拆并接续契约](docs/land-contract.md)。
+
 ## 契约与边界
 
 详见[数据契约](docs/contract.md)。水深使用Fraction精确计算；建议仅供人工安排，不自动控制泵或预测作物。

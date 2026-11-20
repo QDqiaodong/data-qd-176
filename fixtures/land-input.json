@@ -1,0 +1,89 @@
+{
+  "fields": [
+    {
+      "id": "a",
+      "area_m2": 2,
+      "capacity_mm": 10,
+      "opening_mm": 4,
+      "threshold_mm": 0,
+      "target_mm": 0,
+      "infiltration_mm": 100,
+      "efficiency_permille": 1000
+    },
+    {
+      "id": "b",
+      "area_m2": 2,
+      "capacity_mm": 10,
+      "opening_mm": 0,
+      "threshold_mm": 0,
+      "target_mm": 0,
+      "infiltration_mm": 100,
+      "efficiency_permille": 1000
+    }
+  ],
+  "weather": [
+    {"date": "2026-09-01", "rain_mm": 0, "et_mm": 0},
+    {"date": "2026-09-02", "rain_mm": 0, "et_mm": 1},
+    {"date": "2026-09-03", "rain_mm": 0, "et_mm": 0}
+  ],
+  "applications": [
+    {"field_id": "b", "date": "2026-09-01", "gross_mm": 4}
+  ],
+  "repartitions": [
+    {
+      "date": "2026-09-02",
+      "new_fields": [
+        {
+          "id": "c",
+          "area_m2": 2,
+          "capacity_mm": 3,
+          "threshold_mm": 0,
+          "target_mm": 0,
+          "infiltration_mm": 100,
+          "efficiency_permille": 1000
+        },
+        {
+          "id": "d",
+          "area_m2": 2,
+          "capacity_mm": 10,
+          "threshold_mm": 0,
+          "target_mm": 0,
+          "infiltration_mm": 100,
+          "efficiency_permille": 1000
+        }
+      ],
+      "moves": [
+        {"from_field_id": "a", "to_field_id": "c", "area_m2": 1},
+        {"from_field_id": "b", "to_field_id": "c", "area_m2": 1},
+        {"from_field_id": "a", "to_field_id": "d", "area_m2": 1},
+        {"from_field_id": "b", "to_field_id": "d", "area_m2": 1}
+      ]
+    },
+    {
+      "date": "2026-09-03",
+      "new_fields": [
+        {
+          "id": "e",
+          "area_m2": 4,
+          "capacity_mm": 100,
+          "threshold_mm": 0,
+          "target_mm": 0,
+          "infiltration_mm": 100,
+          "efficiency_permille": 1000
+        }
+      ],
+      "moves": [
+        {"from_field_id": "c", "to_field_id": "e", "area_m2": 2},
+        {"from_field_id": "d", "to_field_id": "e", "area_m2": 2}
+      ]
+    }
+  ],
+  "audit_sources": [
+    {"date": "2026-09-01", "field_id": "a", "kind": "initial"},
+    {"date": "2026-09-01", "field_id": "b", "kind": "irrigation"}
+  ],
+  "audit_sinks": [
+    {"date": "2026-09-02", "field_id": "c", "kind": "drainage"},
+    {"date": "2026-09-03", "field_id": "e", "kind": "storage"}
+  ]
+}

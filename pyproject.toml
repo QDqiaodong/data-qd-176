@@ -13,6 +13,7 @@ soil-water = "irrigation.cli:main"
 soil-water-plan = "irrigation.plan_cli:plan_main"
 soil-water-ledger = "irrigation.ledger_cli:main"
 soil-water-reuse = "irrigation.reuse_cli:main"
+soil-water-land = "irrigation.land_water_cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
