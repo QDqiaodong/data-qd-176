@@ -5,3 +5,5 @@ run/
 build/
 dist/
 *.egg-info/
+*.db-wal
+*.db-shm

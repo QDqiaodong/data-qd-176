@@ -1,0 +1,8 @@
+{
+  "request_id": "req-correction-1",
+  "expected_generation": 2,
+  "readings": [
+    {"field_id": "f1", "date": "2026-09-01", "revision": 2,
+     "closing_litres": 12, "reset_opening_litres": null}
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "request_id": "req-close-day1",
+  "expected_generation": 1,
+  "through_date": "2026-09-01"
+}

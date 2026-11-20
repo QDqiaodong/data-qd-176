@@ -1,0 +1,10 @@
+{
+  "request_id": "req-initial",
+  "expected_generation": 0,
+  "readings": [
+    {"field_id": "f1", "date": "2026-09-01", "revision": 1,
+     "closing_litres": 10, "reset_opening_litres": null},
+    {"field_id": "f1", "date": "2026-09-02", "revision": 1,
+     "closing_litres": 20, "reset_opening_litres": null}
+  ]
+}

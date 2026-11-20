@@ -1,0 +1,21 @@
+{
+  "fields": [
+    {
+      "id": "f1",
+      "area_m2": 2,
+      "capacity_mm": 100,
+      "opening_mm": 0,
+      "threshold_mm": 0,
+      "target_mm": 0,
+      "infiltration_mm": 100,
+      "efficiency_permille": 1000
+    }
+  ],
+  "weather": [
+    {"date": "2026-09-01", "rain_mm": 0, "et_mm": 8},
+    {"date": "2026-09-02", "rain_mm": 0, "et_mm": 0}
+  ],
+  "meters": [
+    {"field_id": "f1", "opening_litres": 0, "price_microunits_per_litre": 3}
+  ]
+}

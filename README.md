@@ -38,6 +38,24 @@ uv pip check --python .venv/bin/python
 
 输入或业务规则无效、输出已存在时退出2，保留原目标；成功退出0。报告/数据库先完整生成再原子新建，无覆盖。run/为忽略目录。
 
+## 实际用水计量台账与结算更正（soil-water-ledger）
+
+`irrigation.meter_ledger` 只处理**已经发生的用水**：把各田块逻辑水表迟到、改版、换表
+重起算的累计读数版本，持久化到本地 SQLite（仅标准库），核算实际毛供水、真实田间水账，
+并在历史读数更正时以可追溯的正负差额追加 adjustment，绝不改写已发出的结算单，也不会
+因重试重复收费。不选择未来供水、不操作设备；`run`、`plan` 与两个既有命令的接口行为
+完全不变。
+
+```sh
+PYTHONPATH=src python3 examples/ledger_worked_example.py     # API 算例（含断言）
+PYTHONPATH=src sh examples/ledger-cli/00-run.sh              # 等价 CLI 演示
+```
+
+四个子命令：`create --db DB --config JSON`、`apply --db DB --source JSON`、
+`close --db DB --source JSON`、`report --db DB --output JSON`。每个 apply/close 是
+一个原子业务提交，`generation` 单调递增；`request_id` 幂等且其判断优先于 generation
+冲突，精确重试返回第一次的完整回执。完整口径见[计量台账契约](docs/ledger-contract.md)。
+
 ## 契约与边界
 
 详见[数据契约](docs/contract.md)。水深使用Fraction精确计算；建议仅供人工安排，不自动控制泵或预测作物。
