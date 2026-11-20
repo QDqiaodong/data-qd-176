@@ -10,6 +10,7 @@ dependencies = []
 
 [project.scripts]
 soil-water = "irrigation.cli:main"
+soil-water-plan = "irrigation.plan_cli:plan_main"
 
 [tool.setuptools.packages.find]
 where = ["src"]

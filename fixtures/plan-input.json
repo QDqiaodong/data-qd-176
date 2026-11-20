@@ -1,0 +1,69 @@
+{
+  "fields": [
+    {
+      "id": "a",
+      "area_m2": 1,
+      "capacity_mm": 2,
+      "opening_mm": 1,
+      "threshold_mm": 0,
+      "target_mm": 0,
+      "infiltration_mm": 10,
+      "efficiency_permille": 1000
+    },
+    {
+      "id": "b",
+      "area_m2": 1,
+      "capacity_mm": 5,
+      "opening_mm": 1,
+      "threshold_mm": 0,
+      "target_mm": 0,
+      "infiltration_mm": 10,
+      "efficiency_permille": 1000
+    }
+  ],
+  "weather": [
+    {
+      "date": "2026-07-01",
+      "rain_mm": 0,
+      "et_mm": 1
+    },
+    {
+      "date": "2026-07-02",
+      "rain_mm": 0,
+      "et_mm": 4
+    }
+  ],
+  "applications": [],
+  "planning": {
+    "reservoir": {
+      "capacity_litres": 5,
+      "opening_litres": 5
+    },
+    "supply_days": [
+      {
+        "date": "2026-07-01",
+        "inflow_litres": 0,
+        "pump_limit_litres": 5,
+        "minimum_closing_litres": 0
+      },
+      {
+        "date": "2026-07-02",
+        "inflow_litres": 0,
+        "pump_limit_litres": 0,
+        "minimum_closing_litres": 0
+      }
+    ],
+    "field_rules": [
+      {
+        "field_id": "a",
+        "stress_weight": 2,
+        "gross_mm_choices": [0, 5]
+      },
+      {
+        "field_id": "b",
+        "stress_weight": 1,
+        "gross_mm_choices": [0, 5]
+      }
+    ]
+  }
+}
