@@ -1,0 +1,38 @@
+{
+  "fields": [
+    {
+      "id": "north",
+      "area_m2": 1000,
+      "capacity_mm": 100,
+      "opening_mm": 40,
+      "threshold_mm": 30,
+      "target_mm": 60,
+      "infiltration_mm": 50,
+      "efficiency_permille": 800
+    }
+  ],
+  "weather": [
+    {
+      "date": "2026-06-01",
+      "rain_mm": 10,
+      "et_mm": 20
+    },
+    {
+      "date": "2026-06-02",
+      "rain_mm": 0,
+      "et_mm": 40
+    },
+    {
+      "date": "2026-06-03",
+      "rain_mm": 80,
+      "et_mm": 10
+    }
+  ],
+  "applications": [
+    {
+      "field_id": "north",
+      "date": "2026-06-02",
+      "gross_mm": 25
+    }
+  ]
+}
