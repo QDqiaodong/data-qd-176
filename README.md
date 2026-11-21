@@ -112,6 +112,37 @@ c 因容量 3mm 渗漏 2L（两笔来源各 1L）、ET 各 2L；第三日 c、d 
 后末存来源变为 a=4L、b=6L；去掉灌溉且次日 ET=3mm 时，半接管 c 缺水 1mm、独占
 c 渗漏 1mm 且缺水 0。完整口径见[拆并接续契约](docs/land-contract.md)。
 
+## 雨量证据补核与供水建议签发（soil-water-rain-audit）
+
+`irrigation.rain_audit` 核对月底田间水账时**只留下几个候选值的自动雨量记录**：
+在完全保留现有日水账口径（输水效率、入渗上限、径流、容量渗漏、实际 ET、缺水与
+建议顺序）的前提下，枚举全部完整可能历史（逐日雨量序列），使每条分段雨量合计
+成立、逐田块延续真实上日结存并满足全部日终探头界限，再判断下一日的田间供水建议
+能否签发。证据互相矛盾时报告 status="inconsistent"。需要补查时给出一份**单日**
+追查单：先查哪个日期、查到不同数值后哪些田块可以签发，只复核不重派已发生的
+灌溉，也不下发设备指令。
+
+```sh
+PYTHONPATH=src python3 examples/rain_audit_worked_example.py  # API 算例（含独立断言）
+PYTHONPATH=src sh examples/rain-audit-cli/00-run.sh            # 等价 CLI 演示
+```
+
+或直接运行命令（输出路径必须不存在，重复演示请换新路径）：
+
+```sh
+PYTHONPATH=src python3 -m irrigation.rain_audit_cli \
+  --source fixtures/rain-audit-input.json --output run/rain-audit-report.json
+```
+
+样例 `fixtures/rain-audit-input.json` 是契约强制的三日算例：1m² 田块期初 0mm、
+容量 4mm、入渗上限 10mm、效率 1000‰、阈值 3mm、目标 4mm，不灌溉；三天 ET 依次
+2、0、0mm，候选雨量依次 [0,4]、[0,4]、[0,2]，仅前两日合计 4mm。共 4 条可能
+历史；第一天未满足 ET 范围 0..2mm，最后一天结存 2..4mm、渗漏 0..2mm，建议集合
+[0,2] 暂不签发；追查单指向第一天，查到 0mm 时签发 0，查到 4mm 时建议仍为
+[0,2]。补入“第二天结存恰为 4mm”的探头后只剩 2 条历史，签发 0，不再开追查单。
+API 形式为 `irrigation.rain_audit.run(data)`。完整口径见[雨量补核契约]
+(docs/rain-audit-contract.md)。
+
 ## 契约与边界
 
 详见[数据契约](docs/contract.md)。水深使用Fraction精确计算；建议仅供人工安排，不自动控制泵或预测作物。

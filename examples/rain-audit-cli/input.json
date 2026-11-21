@@ -1,0 +1,25 @@
+{
+  "fields": [
+    {
+      "id": "f",
+      "area_m2": 1,
+      "capacity_mm": 4,
+      "opening_mm": 0,
+      "threshold_mm": 3,
+      "target_mm": 4,
+      "infiltration_mm": 10,
+      "efficiency_permille": 1000
+    }
+  ],
+  "applications": [],
+  "weather": [
+    {"date": "2026-09-01", "et_mm": 2, "rain_mm_choices": [0, 4]},
+    {"date": "2026-09-02", "et_mm": 0, "rain_mm_choices": [0, 4]},
+    {"date": "2026-09-03", "et_mm": 0, "rain_mm_choices": [0, 2]}
+  ],
+  "rain_windows": [
+    {"from_date": "2026-09-01", "through_date": "2026-09-02", "total_rain_mm": 4}
+  ],
+  "probes": [],
+  "checkable_rain_dates": ["2026-09-01", "2026-09-02", "2026-09-03"]
+}
